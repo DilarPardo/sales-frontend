@@ -1,0 +1,18 @@
+<template>
+  <router-view />
+</template>
+
+<script setup>
+// Vacío por ahora
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f4f9;
+}
+</style>

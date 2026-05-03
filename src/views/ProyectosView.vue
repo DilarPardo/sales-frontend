@@ -4,8 +4,8 @@ import { apiPieces } from '../api/axios';
 
 // --- ESTADOS ---
 const showModal = ref(false);
-const isLoading = ref(false);      // Carga de la tabla
-const isActionLoading = ref(false); // Carga del botón guardar
+const isLoading = ref(false);      
+const isActionLoading = ref(false); 
 const proyectos = ref([]);
 const esEdicion = ref(false);
 const erroresBackend = ref({});
@@ -34,7 +34,6 @@ const cargarProyectos = async () => {
   isLoading.value = true;
   try {
     const { data } = await apiPieces.get('/projects');
-    // Ajuste según estructura de Laravel (data.data para paginados o data para colecciones simples)
     proyectos.value = data.data || data; 
   } catch (error) {
     console.error("Error cargando proyectos:", error);
@@ -49,10 +48,8 @@ const guardarProyecto = async () => {
   
   try {
     if (esEdicion.value) {
-      // Usamos PUT para editar enviando el ID correcto
       await apiPieces.put(`/projects/${proyectoForm.value.id}`, proyectoForm.value);
     } else {
-      // Usamos POST para crear nuevo
       await apiPieces.post('/projects', proyectoForm.value);
     }
     
@@ -85,7 +82,6 @@ const eliminarProyecto = async (id) => {
 // --- UTILIDADES ---
 const abrirEdicion = (proyecto) => {
   esEdicion.value = true;
-  // Copiamos los datos para que el ID esté presente en proyectoForm
   proyectoForm.value = { ...proyecto, fecha: fechaHoy };
   showModal.value = true;
 };

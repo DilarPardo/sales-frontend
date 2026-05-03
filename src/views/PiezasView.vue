@@ -9,7 +9,7 @@ const isLoading = ref(false);
 const isActionLoading = ref(false);
 
 const piezas = ref([]);
-const bloques = ref([]); // Para el selector de vinculación
+const bloques = ref([]);
 const erroresBackend = ref({});
 
 // Modelo exacto a la migración 'pieces'
@@ -54,7 +54,6 @@ const guardarPieza = async () => {
   erroresBackend.value = {};
 
   try {
-    // Aseguramos formato decimal antes de enviar
     const payload = {
       ...piezaForm.value,
       theoretical_weight: parseFloat(piezaForm.value.theoretical_weight).toFixed(2)

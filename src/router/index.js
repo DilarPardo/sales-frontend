@@ -12,13 +12,11 @@ const routes = [
     path: '/',
     name: 'login',
     component: LoginView,
-    // Marcamos explícitamente que esta ruta NO requiere autenticación
     meta: { requiresAuth: false }
   },
   {
     path: '/admin',
     component: MainLayout,
-    // Aplicamos la protección a /admin y a todos sus hijos (dashboard, proyectos, etc.)
     meta: { requiresAuth: true },
     children: [
       {
@@ -60,10 +58,7 @@ const router = createRouter({
   routes
 })
 
-/**
- * GUARDIA DE NAVEGACIÓN (Middleware)
- * Se ejecuta antes de cada cambio de ruta.
- */
+
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('AUTH_TOKEN');
 

@@ -65,7 +65,6 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-// Importamos específicamente apiAuth que es la del puerto 8000
 import { apiAuth } from '../api/axios'; 
 
 const router = useRouter();
@@ -78,14 +77,14 @@ const handleLogin = async () => {
   cargando.value = true;
 
   try {
-    // 1. Usamos apiAuth (Puerto 8000) para el login
+    // apiAuth (Puerto 8000) para el login
     const response = await apiAuth.post('/login', credentials.value);
     
-    // 2. Extraemos el token buscando ambos nombres posibles
+    // Extraemos el token 
     const token = response.data.token || response.data.access_token;
     
     if (token) {
-      // 3. Guardamos el token real
+      // Guardamos el token real
       localStorage.setItem('AUTH_TOKEN', token);
       
       if(response.data.user) {

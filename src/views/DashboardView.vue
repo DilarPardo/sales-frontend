@@ -15,7 +15,6 @@ const isLoading = ref(true);
 const cargarEstadisticas = async () => {
   isLoading.value = true;
   try {
-    // Realizamos peticiones paralelas
     const [resProy, resBloq, resPiezas, resFab] = await Promise.all([
       apiPieces.get('/projects'),
       apiPieces.get('/blocks'),
@@ -23,7 +22,6 @@ const cargarEstadisticas = async () => {
       apiPieces.get('/fabrications')
     ]);
 
-    // Corregimos el acceso a los datos: res.data.data es el estándar en Laravel Resources
     stats.value.proyectos = (resProy.data.data || resProy.data).length || 0;
     stats.value.bloques = (resBloq.data.data || resBloq.data).length || 0;
     stats.value.piezas = (resPiezas.data.data || resPiezas.data).length || 0;
@@ -40,7 +38,6 @@ const cargarEstadisticas = async () => {
   } catch (error) {
     console.error("Error cargando estadísticas:", error);
   } finally {
-    // Agregamos un pequeño delay artificial para que el loader sea visible si la red es muy rápida
     setTimeout(() => {
       isLoading.value = false;
     }, 500);

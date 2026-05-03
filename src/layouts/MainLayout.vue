@@ -112,8 +112,6 @@ const userName = ref('Cargando...');
 const isLoading = ref(true); // Estado del Loader inicial
 
 onMounted(() => {
-  // Simulamos un pequeño tiempo de carga para que el loader se vea fluido
-  // Aquí es donde normalmente cargarías datos iniciales del usuario
   setTimeout(() => {
     const userData = localStorage.getItem('USER_DATA');
     if (userData) {

@@ -14,12 +14,11 @@ const piezasTotales = ref([]);
 const isLoading = ref(true);
 const filtroProyecto = ref('');
 
-// Función mejorada: Busca el ID del proyecto hasta debajo de las piedras
 const obtenerProyectoId = (f) => {
   return f.project_id || 
          f.piece?.block?.project_id || 
          f.piece?.block?.project?.id || 
-         f.id_proyecto_aux; // Campo extraído manualmente en cargarDatos
+         f.id_proyecto_aux; 
 };
 
 const cargarDatos = async () => {
@@ -35,7 +34,6 @@ const cargarDatos = async () => {
     proyectos.value = resProy.data.data || resProy.data;
     piezasTotales.value = resPiezas.data.data || resPiezas.data;
 
-    // NORMALIZACIÓN: Si la relación viene vacía, intentamos rescatar el nombre/ID
     fabricaciones.value = rawFab.map(f => ({
       ...f,
       nombre_proyecto_display: f.piece?.block?.project?.name || f.project_name || 'Proyecto General',
@@ -51,7 +49,7 @@ const cargarDatos = async () => {
   }
 };
 
-// --- 1. FILTRO DE TABLA ---
+// --- FILTRO DE TABLA ---
 const datosFiltrados = computed(() => {
   if (!filtroProyecto.value) return fabricaciones.value;
   return fabricaciones.value.filter(f => {
@@ -60,7 +58,7 @@ const datosFiltrados = computed(() => {
   });
 });
 
-// --- 2. GRÁFICA DE TORTA ---
+// --- GRÁFICA DE TORTA ---
 const chartDataStatus = computed(() => {
   const fabricadasCount = fabricaciones.value.length;
   const totalPiezas = piezasTotales.value.length || fabricadasCount; // Evita división por cero
@@ -76,12 +74,11 @@ const chartDataStatus = computed(() => {
   };
 });
 
-// --- 3. GRÁFICA DE BARRAS (Sincronizada con IDs) ---
+// --- GRÁFICA DE BARRAS 
 const chartDataProjects = computed(() => {
   const labels = proyectos.value.map(p => p.name);
   
   const dataPesos = proyectos.value.map(p => {
-    // Buscamos fabricaciones que coincidan con el ID del proyecto actual de la lista
     const total = fabricaciones.value
       .filter(f => String(obtenerProyectoId(f)) === String(p.id))
       .reduce((acc, curr) => acc + parseFloat(curr.real_weight || 0), 0);

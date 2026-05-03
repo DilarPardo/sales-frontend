@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-// Vacío por ahora
+// 
 </script>
 
 <style>
